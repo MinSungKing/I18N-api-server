@@ -3,14 +3,14 @@
 
 	<springProfile name="log-file">
 		<include resource="appenders/appender-file.xml" />
-		<root level="INFO">
+		<root level="DEBUG">
 			<appender-ref ref="FILE" />
 		</root>
 	</springProfile>
 
 	<springProfile name="log-console">
 		<include resource="appenders/appender-console.xml" />
-		<root level="INFO">
+		<root level="DEBUG">
 			<appender-ref ref="CONSOLE" />
 		</root>
 	</springProfile>
