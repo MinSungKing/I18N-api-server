@@ -15,5 +15,18 @@
 			WHERE name = #{name}
 		</if>
 	</select>
+	
+	<select id="selectKeyByName" parameterType="com.mskim.i18l.dto.KeyDto" resultType="com.mskim.i18l.dto.KeyDto">
+		SELECT * FROM keyword WHERE name = #{name}
+	</select>
+	
+	<select id="selectKeyById" parameterType="com.mskim.i18l.dto.KeyDto" resultType="com.mskim.i18l.dto.KeyDto">
+		SELECT * FROM keyword WHERE id = #{id}
+	</select>
+	
+	<update id="updateKey" parameterType="com.mskim.i18l.dto.KeyDto">
+		UPDATE keyword SET name=#{name}
+		WHERE id=#{id}
+	</update>
 
 </mapper> 

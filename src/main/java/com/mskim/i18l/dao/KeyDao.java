@@ -8,7 +8,14 @@ import com.mskim.i18l.dto.KeyDto;
 
 public interface KeyDao {
 	
-	void insertKey(KeyDto key);
-	List<HashMap<String,Object>> selectKeys(Map<String,String> param);
-
+	int insertKey(KeyDto key);
+	
+	List<HashMap<String,Object>> selectKeys(Map<String,String> params);
+	
+	KeyDto selectKeyById(KeyDto key);
+	
+	KeyDto selectKeyByName(KeyDto key);
+	
+	int updateKey(KeyDto key);
+	
 }

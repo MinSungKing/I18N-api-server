@@ -17,9 +17,15 @@ public class I18nServiceImpl implements I18nService {
 	private KeyDao keyDao;
 	
 	@Override
-	public void addKey(KeyDto key) {
+	public KeyDto addKey(KeyDto key) {
 		
-		keyDao.insertKey(key);
+		if(keyDao.insertKey(key) > 0) {
+			KeyDto insertedKey = keyDao.selectKeyByName(key);
+			return insertedKey;
+		}
+		else {
+			return null;
+		}
 		
 	}
 
@@ -30,6 +36,25 @@ public class I18nServiceImpl implements I18nService {
 		queryParamMap.put("name", name);
 		
 		return keyDao.selectKeys(queryParamMap);
+	}
+
+	@Override
+	public KeyDto updateKey(KeyDto key) {
+
+		if(keyDao.updateKey(key) > 0) {
+			KeyDto updatedKey = keyDao.selectKeyById(key);
+			return updatedKey;
+		}
+		else {
+			return null;
+		}
+		
+	}
+
+	@Override
+	public KeyDto getKeyById(KeyDto key) {
+		
+		return keyDao.selectKeyById(key);
 	}
 
 }

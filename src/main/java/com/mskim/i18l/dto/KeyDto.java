@@ -1,8 +1,12 @@
 package com.mskim.i18l.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 public class KeyDto {
 	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private int id;
+	
 	private String name;
 	
 	public int getId() {
