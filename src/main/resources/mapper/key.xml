@@ -9,4 +9,11 @@
 		VALUES(#{id}, #{name})
 	</insert>
 
+	<select id="selectKeys" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT * FROM keyword
+		<if test="name != null and name != '' ">
+			WHERE name = #{name}
+		</if>
+	</select>
+
 </mapper> 

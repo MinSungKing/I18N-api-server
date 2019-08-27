@@ -1,5 +1,9 @@
 package com.mskim.i18l.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +21,15 @@ public class I18nServiceImpl implements I18nService {
 		
 		keyDao.insertKey(key);
 		
+	}
+
+	@Override
+	public List<HashMap<String,Object>> getKeys(String name) {
+		
+		Map<String,String> queryParamMap = new HashMap<>();
+		queryParamMap.put("name", name);
+		
+		return keyDao.selectKeys(queryParamMap);
 	}
 
 }
