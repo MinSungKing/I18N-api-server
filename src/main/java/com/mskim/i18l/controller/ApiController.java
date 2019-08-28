@@ -115,10 +115,13 @@ public class ApiController {
 															, @RequestBody @Valid TranslationDto translation) {
 		
 		logger.info("POST /keys/{keyId}/translations/{locale}	keyId=" + keyId + ", locale=" + locale + ", value=" + translation.getValue());
-	
-		/*
-		 * Language Detect 검사 추가 필요 
-		 */
+
+		String detectedLocale = i18nService.getLanguageLocale(translation.getValue());
+		if(detectedLocale == null || !detectedLocale.equals(locale)) {
+			Map<String,Object> messageMap = new HashMap<String,Object>();
+			messageMap.put("message", "value and locale are not matched.");
+			return new ResponseEntity<Map<String,Object>>(messageMap, HttpStatus.BAD_REQUEST);
+		}
 		
 		if(!validLocales.contains(locale)) {
 			return new ResponseEntity<Map<String,Object>>(HttpStatus.BAD_REQUEST);
@@ -170,11 +173,7 @@ public class ApiController {
 																			@PathVariable("locale") String locale) {
 		
 		logger.info("GET /keys/{keyId}/translations{locale}	keyId=" + keyId + ", locale=" + locale);
-		
-		/*
-		 * Language Detect 검사 추가 필요 
-		 */
-		
+
 		if(!validLocales.contains(locale)) {
 			return new ResponseEntity<Map<String,Object>>(HttpStatus.BAD_REQUEST);
 		}
@@ -201,9 +200,12 @@ public class ApiController {
 		
 		logger.info("PUT /keys/{keyId}/translations/{locale}	keyId=" + keyId + ", locale=" + locale);
 		
-		/*
-		 * Language Detect 검사 추가 필요 
-		 */
+		String detectedLocale = i18nService.getLanguageLocale(translation.getValue());
+		if(detectedLocale == null || !detectedLocale.equals(locale)) {
+			Map<String,Object> messageMap = new HashMap<String,Object>();
+			messageMap.put("message", "value and locale are not matched.");
+			return new ResponseEntity<Map<String,Object>>(messageMap, HttpStatus.BAD_REQUEST);
+		}
 		
 		if(!validLocales.contains(locale)) {
 			return new ResponseEntity<Map<String,Object>>(HttpStatus.BAD_REQUEST);
@@ -211,7 +213,6 @@ public class ApiController {
 		
 		translation.setKeyId(keyId);
 		translation.setLocale(locale);
-		
 		TranslationDto existingTranslation = i18nService.getTranslationByKeyIdAndLocale(translation);
 		
 		if(existingTranslation == null) {
@@ -226,6 +227,22 @@ public class ApiController {
 		
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		resultMap.put("translation", updatedTranslation);
+		
+		return new ResponseEntity<Map<String,Object>>(resultMap, HttpStatus.OK);
+	}
+	
+	@GetMapping("/language_detect")
+	public ResponseEntity<Map<String,Object>> getLanguageLocale(@RequestParam(value="message", required=true)String message) {
+		
+		logger.info("GET /language_detect	message=" + message);
+		
+		String locale = i18nService.getLanguageLocale(message);
+		if(locale == null) {
+			return new ResponseEntity<Map<String,Object>>(HttpStatus.NOT_FOUND);
+		}
+		
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("locale", locale);
 		
 		return new ResponseEntity<Map<String,Object>>(resultMap, HttpStatus.OK);
 	}

@@ -18,5 +18,6 @@ public interface I18nService {
 	List<HashMap<String,Object>> getTranslationsByKeyId(int keyId);
 	TranslationDto getTranslationByKeyIdAndLocale(TranslationDto translation);
 	TranslationDto updateTranslation(TranslationDto translation);
+	String getLanguageLocale(String message);
 
 }

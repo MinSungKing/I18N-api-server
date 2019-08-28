@@ -4,22 +4,35 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.mskim.i18l.controller.ApiController;
 import com.mskim.i18l.dao.KeyDao;
 import com.mskim.i18l.dao.TranslationDao;
 import com.mskim.i18l.dto.KeyDto;
 import com.mskim.i18l.dto.TranslationDto;
 
+
+import com.detectlanguage.DetectLanguage;
+import com.detectlanguage.errors.APIError;
+
 @Service
 public class I18nServiceImpl implements I18nService {
+	
+	private Logger logger = LoggerFactory.getLogger(I18nServiceImpl.class);
 
 	@Autowired
 	private KeyDao keyDao;
 	
 	@Autowired
 	private TranslationDao translationDao;
+	
+	@Value("${detectlanguage.apikey}")
+	private String detectLanguageApiKey;
 	
 	@Override
 	public KeyDto addKey(KeyDto key) {
@@ -97,6 +110,22 @@ public class I18nServiceImpl implements I18nService {
 		else {
 			return null;
 		}
+	}
+
+	@Override
+	public String getLanguageLocale(String message) {
+		
+		DetectLanguage.apiKey = detectLanguageApiKey;
+		
+		String locale = null;
+		try {
+			locale = DetectLanguage.simpleDetect(message);
+			logger.info("Language locale of " + message + " : " + locale);
+		} catch (APIError e) {
+			logger.error(e.toString());
+		}
+		
+		return locale;
 	}
 
 }
