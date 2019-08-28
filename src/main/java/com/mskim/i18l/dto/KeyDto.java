@@ -1,12 +1,13 @@
 package com.mskim.i18l.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import javax.validation.constraints.NotEmpty;
 
 public class KeyDto {
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	
 	private int id;
 	
+	@NotEmpty
 	private String name;
 	
 	public int getId() {

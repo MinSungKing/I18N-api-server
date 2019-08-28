@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.mskim.i18l.dto.KeyDto;
+import com.mskim.i18l.dto.TranslationDto;
 
 public interface KeyDao {
 	
@@ -17,5 +18,7 @@ public interface KeyDao {
 	KeyDto selectKeyByName(KeyDto key);
 	
 	int updateKey(KeyDto key);
+	
+	int insertTranslation(TranslationDto translation);
 	
 }

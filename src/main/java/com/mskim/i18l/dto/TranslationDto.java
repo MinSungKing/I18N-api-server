@@ -1,10 +1,15 @@
 package com.mskim.i18l.dto;
 
+import javax.validation.constraints.NotEmpty;
+
+
 public class TranslationDto {
 	
 	private int id;
 	private int  keyId;
 	private String locale;
+	
+	@NotEmpty
 	private String value;
 	
 	public int getId() {
