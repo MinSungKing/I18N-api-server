@@ -222,14 +222,14 @@ public class I18nServiceImpl implements I18nService {
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		String message = "";
 		
-		String detectedLocale = getLanguageLocaleWithApi(translation.getValue());
-		if(detectedLocale == null || !detectedLocale.equals(locale)) {
-			message = "value [" + translation.getValue() + "] and locale [" + locale + "] are not matched.";
+		if(!validLocales.contains(locale)) {
+			message = "locale [" + locale + "] is not allowed. [ko, en, ja] are valid.";
 			return getResponseForExceptionCase(message, HttpStatus.BAD_REQUEST);
 		}
 		
-		if(!validLocales.contains(locale)) {
-			message = "locale [" + locale + "] is not allowed. [ko, en, ja] are valid.";
+		String detectedLocale = getLanguageLocaleWithApi(translation.getValue());
+		if(detectedLocale == null || !detectedLocale.equals(locale)) {
+			message = "value [" + translation.getValue() + "] and locale [" + locale + "] are not matched.";
 			return getResponseForExceptionCase(message, HttpStatus.BAD_REQUEST);
 		}
 		
