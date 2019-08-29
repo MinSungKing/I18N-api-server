@@ -141,6 +141,15 @@ public class I18nServiceImpl implements I18nService {
 			return getResponseForExceptionCase(message, HttpStatus.BAD_REQUEST);
 		}
 		
+		KeyDto key = new KeyDto();
+		key.setId(keyId);
+		KeyDto existingKey = keyDao.selectKeyById(key);
+		
+		if(existingKey == null) {
+			message = "Can not find any key with keyId [" + keyId + "].";
+			return getResponseForExceptionCase(message, HttpStatus.NOT_FOUND);
+		}
+		
 		translation.setKeyId(keyId);
 		translation.setLocale(locale);
 		TranslationDto targetTranslation = translationDao.selectTranslationByKeyIdAndLocale(translation);
