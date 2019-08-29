@@ -7,7 +7,7 @@ MySQL 8.0.11
 Maven  
 
 ## Create Table
-DB 커넥션 설정은 src/main/resources/application-local.properties 파일에서 수정
+DB 커넥션 설정은 src/main/resources/application-local.properties 파일에서 수정 가능
 
 ```
 CREATE SCHEMA workdb;
@@ -34,16 +34,16 @@ CREATE TABLE translation(
 
 
 ## Run project
-‘’’
+```
 $ mvn package
 
 $ java -jar target/I18N-API-Server-0.0.1-SNAPSHOT.jar  
 
-‘’’
+```
 
 
 ## API Test setting
-###Postman 테스트 기준  
+### Postman 테스트 기준  
 Authorization - Basic Auth  
 Username : user001  
 Password : password00123  
